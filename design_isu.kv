@@ -1,0 +1,602 @@
+#!text
+#:kivy 1.7.2
+#:import Factory kivy.factory.Factory
+
+#:set color_button (0.784, 0.443, 0.216, 1)  # brown
+#:set color_button_pressed (0.659, 0.522, 0.431, 1)  # darker brown
+#:set color_font   (0.957, 0.890, 0.843, 1)  # off white
+
+WindowManager:
+    Pag1:
+        id: pag1
+        name : 'pag1'
+    Pag2:
+        id: pag2
+        name : 'pag2'
+    Pag3:
+        id: pag3
+        name : 'pag3'
+<CHART_DROPDOWN@DropDown>:
+	max_height: 100
+	bar_width: 5
+	auto_width : False
+	width: 400
+<MyDropDown@DropDown>:
+	max_height: 100
+	bar_width: 5
+	auto_width : False
+	width: 600
+#--------------------------------------------pentru a face colorat scrollbarul
+#	bar_color: 0, 1, 0, 1   # green
+#	bar_inactive_color: 1, 0, 0, 1  # red        
+#	effect_cls: 'ScrollEffect'
+#	scroll_type: ['bars', 'content']
+#--------------------------------------------pentru a face colorat scrollbarul
+<MySpinnerOption@SpinnerOption>:
+	background_normal: ''
+	background_color : [.1, .1, .1, 1]    # blue colour
+	height : 25
+	font_size: 17
+
+<Pag1>:
+	id:pag1
+	name:"pag1"
+	Screen:
+		
+		MDCard:
+
+			size_hint: None, None
+			size: 500, 600
+			pos_hint: {"center_x": 0.5, "center_y": 0.5}
+			elevation: 10
+
+			padding: 25
+			spacing: 25
+
+			orientation: "vertical"
+
+			MDLabel:
+				id: welcome_label
+				text: "Welcome"
+				font_size: 40
+				halign: "center"
+				size_hint_y: None
+				height: self.texture_size[1]
+				padding_y: 15
+
+			MDTextFieldRound:
+				id: user
+				write_tab: False
+				hint_text: "ID"
+				icon_right: "account"
+				size_hint_x: None
+				width: 200
+				font_size: 18
+				pos_hint:{"center_x":0.5}
+			MDTextFieldRound:
+				id: password
+				write_tab: False
+				hint_text: "Parola"
+				icon_right: "eye-off"
+				size_hint_x: None
+				width: 200
+				font_size: 18
+				pos_hint:{"center_x":0.5}
+				password: True
+
+
+			MDRoundFlatButton:
+				text: "Submit"
+				font_size: 18
+				pos_hint: {"center_x": 0.5}
+				on_press: root.submit()
+
+			MDLabel:
+				text: "ISU Bistrita"
+				font_size: 20
+				halign: "center"
+				size_hint_y: None
+				height: self.texture_size[1]
+				padding_y: 50
+
+<Pag2>:
+	id:pag2
+	name:"pag2"
+
+	BoxLayout:
+		orientation: "vertical"
+		
+		MDTopAppBar:
+			title: "Auto ISU Bistrita"
+			anchor_title: "center"
+			md_bg_color: .6,.1,.1,1
+
+		MDBottomNavigation:
+			#colors
+
+			MDBottomNavigationItem:
+				name: "screen1"
+				text: "Auto"
+				icon: "car"
+
+				orientation: "vertical"
+### -----------------------------------------------------INTRARE
+				MDLabel:
+					text: "INTRARE: "
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.30, "center_y": 0.75}
+				MDIcon:
+					icon: "home"
+					pos_hint: {"center_x": .225, "center_y": 0.75}
+#-------------------------------------------------------------SPINNER
+				Spinner:
+					id: spinner_id_intrare
+					dropdown_cls: Factory.MyDropDown
+					option_cls: Factory.MySpinnerOption
+					background_color : [0, .5, 0, 1]
+					text: "Alege IDs"
+					values: root.values_list_spinner_IESIRE
+					font_size: 20
+					size_hint: None, None
+					size: 600, 40
+					pos_hint: {"center_x": 0.5, "center_y": 0.75}
+
+#					on_text: root.spinner_intrare(spinner_id_intrare.text)
+#-------------------------------------------------------------SPINNER
+				MDLabel:
+					id: error_submit_intrare
+					text: ""
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 300, 250
+					pos_hint: {"center_x": 0.5, "center_y": 0.65}
+
+### -----------------------------------------------------IESIRE
+				MDLabel:
+					text: "IESIRE: "
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.30, "center_y": 0.25}
+				MDIcon:
+					icon: "car"
+					pos_hint: {"center_x": .225, "center_y": 0.25}
+
+#-------------------------------------------------------------SPINNER
+				Spinner:
+					id: spinner_id_iesire
+					dropdown_cls: Factory.MyDropDown
+					option_cls: Factory.MySpinnerOption
+					background_color : [.5, 0, 0, 1]
+					text: "Alege IDs"
+					values: root.values_list_spinner_INTRARE
+					font_size: 20
+
+					size_hint: None, None
+					size: 600, 40
+					pos_hint: {"center_x": 0.5, "center_y": 0.25}
+
+#					on_text: root.spinner_iesire(spinner_id_iesire.text)
+#-------------------------------------------------------------SPINNER
+
+				MDLabel:
+					id: error_submit_iesire
+					text: ""
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 300, 250
+					pos_hint: {"center_x": 0.50, "center_y": 0.15}
+### -----------------------------------------------------CLOCK
+				MDLabel:
+					id: timex
+					text: "00:00:00"
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.8, "center_y": 0.5}
+### -----------------------------------------------------ICON CLOCK
+				MDIcon:
+					icon: "clock"
+					pos_hint: {"center_x": .65, "center_y": .5}
+
+### -----------------------------------------------------BUTTON SUBMIT 1 INTRAT 2 IESIT
+				MDRoundFlatButton:
+					text: "Adauga"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.75, "center_y": 0.75}
+					on_release: root.spinner_intrare(spinner_id_intrare.text)
+				MDRoundFlatButton:
+					text: "Adauga"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.75, "center_y": 0.25}
+					on_release: root.spinner_iesire(spinner_id_iesire.text)
+				MDRoundFlatButton:
+					text: "Back"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.05, "center_y": 0.90}
+					on_press: root.back_btn()
+				MDRoundFlatButton:
+					text: "Clear"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": .5, "center_y": 0.5}
+					on_press: root.clear_btn_errors()
+### -----------------------------------------------------BUTTON SUBMIT 1 INTRAT 2 IESIT
+
+### ----------------------------------------------------- SEARCH INTRARI/IESIRI
+			MDBottomNavigationItem:
+				name: "screen2"
+				text: "Search"
+				icon: "compass"
+
+				Spinner:
+					id: spinner_id_date_view
+					dropdown_cls: Factory.CHART_DROPDOWN
+					option_cls: Factory.MySpinnerOption
+					background_color : [0, .6, 1, 1]
+					text: "Alege IDs"
+					values: root.values_list_spinner_DATE_VIEW
+					font_size: 20
+
+					size_hint: None, None
+					size: 400, 40
+					pos_hint: {"center_x": 0.56, "center_y": 0.9}
+
+				MDRoundFlatButton:
+					text: "Search"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.78, "center_y": 0.9}
+					on_press: root.search_id(spinner_id_date_view.text)
+				MDRoundFlatButton:
+					text: "Clear"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.92, "center_y": 0.9}
+					on_press: root.clean_btn_chart()
+
+				MDRaisedButton:
+					id: data_picker_show
+					text: "Select Date"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.71, "center_y": 0.9}
+					on_press: root.show_date_picker()
+
+
+
+				MDLabel:
+					id: search_label
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 450, 250
+					pos_hint: {"center_x": 0.25, "center_y": 0.9}
+				MDLabel:
+					id: date_view_label
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 1000, 1000
+					pos_hint: {"center_x": 0.36, "center_y": 0.5}
+#----------------------------------------------------------------------------MATPLOTLIB
+				BoxLayout:
+					orientation: "vertical"
+					name: box
+					id: box
+					box:box
+					size_hint: None, None
+					size: 1300, 750
+					pos_hint: {"center_x": 0.72, "center_y": 0.5}
+
+					padding: 50
+					spacing: 20
+
+					Image:
+						id: box
+						source: 'ID_cars_intrari_iesiri.png'
+
+
+				MDRoundFlatButton:
+					text: "Refresh"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.72, "center_y": 0.15}
+					on_press: root.matplotlib_first()
+
+
+### ----------------------------------------------------- SEARCH INTRARI/IESIRI
+			MDBottomNavigationItem:
+				name: "screen3"
+				text: "Status"
+				icon: "swap-vertical-circle"
+
+				MDLabel:
+					markup: True
+					text: "INTRARI"
+					theme_text_color: 'Custom'
+					text_color: 0,1,0,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.265, "center_y": 0.1}
+				MDLabel:
+					id: intrari_view_id
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 350, 250
+					pos_hint: {"center_x": 0.25, "center_y": 0.55}
+				MDLabel:
+					id: intrari_view_data
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.41, "center_y": 0.55}
+				MDIcon:
+					icon: "home"
+					pos_hint: {"center_x": .40, "center_y": 0.1}
+#-------------------------------------------------------------------------------INTRARI ---IESIRI--STATUS
+				MDLabel:
+					markup: True
+					text: "IESIRI"
+					theme_text_color: 'Custom'
+					text_color: 1,0,0,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.661, "center_y": 0.1}
+				MDLabel:
+					id: iesiri_view_id
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 350, 100
+					pos_hint: {"center_x": 0.620, "center_y": 0.55}
+				MDLabel:
+					id: iesiri_view_data
+					markup: True
+					text: ""
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H3"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 750
+					pos_hint: {"center_x": 0.785, "center_y": 0.55}
+				MDIcon:
+					icon: "car"
+					pos_hint: {"center_x": .770, "center_y": 0.1}
+
+
+
+
+
+
+
+
+
+
+<Pag3>:
+	id:pag3
+	name:"pag3"
+
+	BoxLayout:
+		orientation: "vertical"
+		
+		MDTopAppBar:
+			title: "Auto ISU Bistrita -ADMIN"
+			anchor_title: "center"
+			md_bg_color: .6,.1,.1,1
+
+		MDBottomNavigation:
+			#colors
+#-------------------------------------------------------------------------------pag3 admin
+			MDBottomNavigationItem:
+				name: "screen1"
+				text: "Users"
+				icon: "account"
+#-------------------------------------------------------------------------------pag3 user simple		
+				MDLabel:
+					text: "[b]USER[/b]"
+					markup: True
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H2"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.40, "center_y": 0.85}
+				MDTextFieldRound:
+					id: user_name_x
+					write_tab: False
+					hint_text: "User Name"
+					mode: "fill"
+					fill_color: 0, 1, 0, .4
+					line_color_focus: 1, 0, 0, 1
+					icon_right: "account"
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.35, "center_y": 0.75}
+				MDTextFieldRound:
+					id: password_x
+					write_tab: False
+					hint_text: "Password"
+					mode: "fill"
+					fill_color: 0, 1, 0, .4
+					line_color_focus: 1, 0, 0, 1
+					icon_right: "lock"
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.35, "center_y": 0.65}
+				MDLabel:
+					id: error_add
+					text: ""
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.35, "center_y": 0.45}
+
+				MDRoundFlatButton:
+					text: "Adauga"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.35, "center_y": 0.55}
+					on_press: root.add_users()
+				MDRoundFlatButton:
+					text: "Back"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.05, "center_y": 0.90}
+					on_press: root.back_btn_admin()
+#-------------------------------------------------------------------------------pag3 user simple
+#-------------------------------------------------------------------------------pag3 user admin
+#-------------------------------------------------------------------------------pag3 user admin
+				MDLabel:
+					text: "[b]USER --ADMIN--[/b]"
+					markup: True
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H2"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.69, "center_y": 0.85}
+				MDTextFieldRound:
+					id: user_name_x_admin
+					write_tab: False
+					hint_text: "Admin User Name"
+					mode: "fill"
+					fill_color: 0, 1, 0, .4
+					line_color_focus: 1, 0, 0, 1
+					icon_right: "account"
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.65, "center_y": 0.75}
+				MDTextFieldRound:
+					id: password_x_admin
+					write_tab: False
+					hint_text: "Password"
+					mode: "fill"
+					fill_color: 0, 1, 0, .4
+					line_color_focus: 1, 0, 0, 1
+					icon_right: "lock"
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.65, "center_y": 0.65}
+				MDLabel:
+					id: error_add_admin
+					text: ""
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.65, "center_y": 0.45}
+
+				MDRoundFlatButton:
+					text: "Adauga"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.65, "center_y": 0.55}
+					on_press: root.add_users_admin()
+
+#-------------------------------------------------------------------------------pag3 user admin
+#-------------------------------------------------------------------------------pag3 add ids
+			MDBottomNavigationItem:
+				name: "screen2"
+				text: "IDS"
+				icon: "car"
+
+				MDLabel:
+					text: "[b]ADD IDs[/b]"
+					markup: True
+					theme_text_color: 'Custom'
+					text_color: 1,1,1,1
+					font_style: "H2"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.55, "center_y": 0.85}
+				MDTextFieldRound:
+					id: ids_add
+					write_tab: False
+					hint_text: "IDs"
+					mode: "fill"
+					fill_color: 0, 1, 0, .4
+					line_color_focus: 1, 0, 0, 1
+					icon_right: "car"
+					size_hint: None, None
+					size: 350, 350
+					pos_hint: {"center_x": 0.5, "center_y": 0.75}
+				MDLabel:
+					id: error_ids
+					text: ""
+					markup: True
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.51, "center_y": 0.45}
+
+				MDRoundFlatButton:
+					text: "Adauga"
+					font_size: 20
+					size_hint: None, None
+					size: 250, 250
+					pos_hint: {"center_x": 0.5, "center_y": 0.65}
+					on_press: root.add_ids()
+#-------------------------------------------------------------------------------pag3 add ids
+
+			MDBottomNavigationItem:
+				name: "screen3"
+				text: "Checks"
+				icon: "wrench"
+
